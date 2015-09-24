@@ -1,0 +1,12 @@
+Meier, Petra, Dr. med., 071 717 71 17
+Gerber, Holger, Prof. Dr. med., 033 333 33 33
+Muster, Hans, 10003, Hintergasse, 5, 3012, Bern
+Meier, Georg, 10004, Vordergasse, 15, 3012, Bern
+Moser, Heinrich, 10005, Irgendwo, 12, 2504, Biel
+Strahlemann, Georg F., Dr. med., 099 837 98 92
+Moser, Helga, PD Dr. med., 099 929 99 99
+Black, Johnny, 10006, Schnellstrasse, 99, 3012, Bern
+White, Peter, 10007, Hinterweg, 24, 2501, Biel
+Brown, Sam, 10008, Vorderweg, 8, 2550, Nidau
+Field, Sally, 10009, Baumallee, 2, 3012, Bern
+Habakuk, Gerold, 10010, Uferweg, 22, 2555, Brügg
