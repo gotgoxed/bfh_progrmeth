@@ -33,15 +33,14 @@ public class PersonDataUtil {
 
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine().trim();
-
-				logger.debug("Read line: " + line);
+				logger.debug("Scanned line: " + line);
 
 				String[] lineArr = line.split(delimiter);
 
 				Person person = new Person(lineArr[0].trim(), lineArr[1].trim());
 
 				persons.add(person);
-				// TODO add logging
+				logger.debug("Added person to ArrayList: " + person);
 			}
 
 			scanner.close();
@@ -64,15 +63,18 @@ public class PersonDataUtil {
 	public static void writePersonsToFile(ArrayList<Person> persons,
 			String outputFile, String delimiter) {
 
-		// TODO: loggin hinzufügen
 		PrintWriter writer = null;
 
 		try {
 			writer = new PrintWriter(outputFile);
+			logger.debug("Output file: " + outputFile);
 
 			for (Person person : persons) {
 				writer.println(person.getName() + delimiter
 						+ person.getFirstName());
+
+				logger.debug("Written person to file: " + person.getFirstName()
+						+ " " + person.getName());
 
 			}
 		} catch (FileNotFoundException e) {
@@ -92,11 +94,12 @@ public class PersonDataUtil {
 	public static void printPersonList(ArrayList<Person> persons) {
 
 		System.out.printf("|-----------------------------------------|\n");
-        System.out.printf("|%-20s|%-20s|\n", "Prename", "Name");
-        System.out.printf("|-----------------------------------------|\n");
+		System.out.printf("|%-20s|%-20s|\n", "Prename", "Name");
+		System.out.printf("|-----------------------------------------|\n");
 		for (Person person : persons) {
-			System.out.printf("|%20s|%20s|\n", person.getFirstName(), person.getName());
+			System.out.printf("|%20s|%20s|\n", person.getFirstName(),
+					person.getName());
 		}
-        System.out.printf("|-----------------------------------------|\n");
+		System.out.printf("|-----------------------------------------|\n");
 	}
 }
