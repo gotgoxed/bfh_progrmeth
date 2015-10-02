@@ -35,14 +35,13 @@ public class PersonDataProcessorTest {
 		Scanner scanner;
 		try {
 			File newFile = new File(PersonDataProcessor.class.getResource(
-					"DataCSVerrors2.txt").toURI());
+					"DataCSVerrors.txt").toURI());
 
 			System.out.println(newFile.toString());
 
 			scanner = new Scanner(newFile, "UTF-8");
 
 			while (scanner.hasNextLine()) {
-				System.out.println("test");
 				System.out.println(scanner.nextLine());
 			}
 
