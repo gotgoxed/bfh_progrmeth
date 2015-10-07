@@ -11,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) throws URISyntaxException, FileNotFoundException {
 
-		File testFile = new File(Main.class.getResource("DataCSVerrors.txt").toURI());
+		File testFile = new File(Main.class.getResource("test.txt").toURI());
 
 		Scanner scanner = new Scanner(testFile, "UTF-8");
 

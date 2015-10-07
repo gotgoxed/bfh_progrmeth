@@ -10,6 +10,7 @@ package ch.bnntd.bfh.pgrm.filesexc;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -32,23 +33,24 @@ public class PersonDataProcessor {
 	 * 
 	 * @param outputFileName
 	 *            - name of the file to write the correct lines to. If the name
-	 *            is defined as an empty string (""), no file is created.
+	 *            is defined as null, no file is created.
 	 * 
 	 * @param outputErrorFileName
 	 *            - name of the file to write the wrong lines to. If the name is
-	 *            defined as an empty string (""), no file is created.
+	 *            defined as null, no file is created.
 	 * 
 	 * @param logFileName
 	 *            - the name of the file to which the log should be written to.
-	 *            If the name is defined as an empty string (""), no file is
-	 *            created.
+	 *            If the name is defined as null, no file is created.
 	 * 
 	 *            Die Methode gibt true zurück, wenn alle Zeilen der
 	 *            Input-Daten das geforderte Format erfüllen.
 	 * 
+	 * @throws EmptyFileException
+	 * 
 	 */
 	public static boolean dataAnalyzer(File inputFile, File outputFile,
-			File outputErrorFile, File logFile) {
+			File outputErrorFile, File logFile) throws EmptyFileException {
 
 		Scanner inputFileScanner = null;
 		PrintWriter outputFileWriter = null;
@@ -57,12 +59,21 @@ public class PersonDataProcessor {
 
 		try {
 
-			inputFileScanner = new Scanner(inputFile);
-			outputFileWriter = new PrintWriter(outputFile);
-			outputErrorFileWriter = new PrintWriter(outputErrorFile);
-			logFileWriter = new PrintWriter(logFile);
+			inputFileScanner = new Scanner(inputFile, "UTF-8");
 
-			if (inputFileScanner.hasNext(".")) {
+			//Three of the params can be defined as null,
+			//then no files will be created.
+			if (outputFile != null) {
+				outputFileWriter = new PrintWriter(outputFile);
+			}
+			if(outputErrorFile != null) {
+				outputErrorFileWriter = new PrintWriter(outputErrorFile);
+			}
+			if(logFile != null) {
+				logFileWriter = new PrintWriter(logFile);
+			}
+
+			if (inputFileScanner.hasNextLine()) {
 				while (inputFileScanner.hasNextLine()) {
 					String line = inputFileScanner.nextLine();
 					if (checkLine(line)) {
@@ -73,35 +84,31 @@ public class PersonDataProcessor {
 				}
 
 			} else
-				throw new EmptyFileException();
+				throw new EmptyFileException("Input file is empty.");
 
 		} catch (FileNotFoundException e) {
 			logger.error(e.getMessage());
 			return false;
-		}
-		finally {
-			if(inputFileScanner != null) inputFileScanner.close();
-			if(inputFileScanner != null) outputFileWriter.close();
-			if(inputFileScanner != null) outputErrorFileWriter.close();
-			if(inputFileScanner != null) logFileWriter.close();
+		} finally {
+			if (inputFileScanner != null)
+				inputFileScanner.close();
+			if (outputFileWriter!= null)
+				outputFileWriter.close();
+			if (outputErrorFileWriter!= null)
+				outputErrorFileWriter.close();
+			if (logFileWriter != null)
+				logFileWriter.close();
 		}
 
 		return false;
 	}
 
 	private static boolean checkLine(String line) {
+		logger.debug("Checking line: \n" + line);
+		
+		String[] splittedLine = line.split(";");
+
 
 		return false;
-	}
-
-	/**
-	 * Thrown to indicate that a method tried to work with a File which is
-	 * empty.
-	 * 
-	 * @author jnt
-	 *
-	 */
-	public static class EmptyFileException extends IllegalArgumentException {
-
 	}
 }

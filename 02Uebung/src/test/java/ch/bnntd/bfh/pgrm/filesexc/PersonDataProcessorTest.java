@@ -14,17 +14,50 @@ import org.junit.Test;
 
 public class PersonDataProcessorTest {
 
+	/**
+	 * Tests the dataAnalyzer function.
+	 * 
+	 */
 	@Test
 	public void testDataAnalyzer() {
-		File inputFile = new File("DataCSVerrors.txt");
-		File outputFile = new File("FileWithRightLines.txt");
-		File outputErrorFile = new File("FileWithErrorLines.txt");
-		File logFile = new File("logFile.txt");
+		File inputFile;
+		try {
+			inputFile = new File(PersonDataProcessorTest.class.getResource(
+					"DataCSVerrors.txt").toURI());
+			File outputFile = new File("FileWithRightLines.txt");
+			File outputErrorFile = new File("FileWithErrorLines.txt");
+			File logFile = new File("logFile.txt");
+			
+			System.out.println(inputFile.toString());
 
-		boolean testFile = PersonDataProcessor.dataAnalyzer(inputFile,
-				outputFile, outputErrorFile, logFile);
+			boolean validFile = PersonDataProcessor.dataAnalyzer(inputFile, outputFile,
+					outputErrorFile, logFile);
+			
+			assertFalse(validFile);
 
-		assertFalse(testFile);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+			fail();
+		} catch (EmptyFileException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	/**
+	 * Tests if {@link EmptyFileException} gets thrown if overgiven file is
+	 * empty.
+	 * 
+	 * @throws EmptyFileException
+	 * @throws URISyntaxException
+	 */
+	@Test(expected = EmptyFileException.class)
+	public void testEnterEmptyFile() throws EmptyFileException,
+			URISyntaxException {
+		File inputFile = new File(PersonDataProcessorTest.class.getResource(
+				"DataCSVempty.txt").toURI());
+
+		PersonDataProcessor.dataAnalyzer(inputFile, null, null, null);
 	}
 
 	@Test
