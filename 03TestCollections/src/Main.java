@@ -1,9 +1,14 @@
+import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class Main {
 
 	public static void main(String[] args) {
 
+		//LISTS
 		ArrayList<Integer> intList = new ArrayList<Integer>();
 		intList.add(2);
 		// int --> Integer, automated by Java
@@ -17,6 +22,12 @@ public class Main {
 		System.out.println(intList);
 		intList.add(1, 10);
 		System.out.println(intList);
-
+		
+		//MAPS
+		Map<String, String> stringMap = new HashMap<String, String>();
+		
+		for (String s : stringMap.keySet()) {
+			System.out.println(s);
+		}
 	}
 }
