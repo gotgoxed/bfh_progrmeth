@@ -13,11 +13,15 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 
 /**
  * @author jnt
@@ -59,9 +63,15 @@ public class PersonDataProcessor {
 		PrintWriter outputErrorFileWriter = null;
 		PrintWriter logFileWriter = null;
 
-		try {
+		int processedLines = 0;
+		int correctLines = 0;
+		int wrongLines = 0;
 
-			inputFileScanner = new Scanner(inputFile, "UTF-8");
+		try {
+			if (inputFile != null)
+				inputFileScanner = new Scanner(inputFile, "UTF-8");
+			else
+				throw new IllegalArgumentException();
 
 			// Three of the params can be defined as null,
 			// then no files will be created.
@@ -76,22 +86,56 @@ public class PersonDataProcessor {
 			}
 
 			if (inputFileScanner.hasNextLine()) {
+
+				if (logFileWriter != null)
+					logFileWriter
+							.println("-- For summary scroll to end of file.\n");
+
 				while (inputFileScanner.hasNextLine()) {
 					String line = inputFileScanner.nextLine();
 					try {
 						if (checkLine(line, logFileWriter)) {
 							logger.debug("Line is valid.");
+							correctLines++;
 							outputFileWriter.println(line);
 						} else {
 							logger.debug("Line is invalid.");
+							wrongLines++;
 							outputErrorFileWriter.println(line);
 						}
+						processedLines++;
 					} catch (IOException e) {
 						logger.debug("Error with logfileWriter.");
 					}
 				}
 			} else
 				throw new EmptyFileException("Input file is empty.");
+
+			if (logFileWriter != null) {
+				logFileWriter.println();
+				logFileWriter
+						.println("Data processing log:\n- Method processing the data:");
+
+				// TODO ask for fastest way to get this name programmatically
+				logFileWriter
+						.println("ch.bnntd.bfh.pgrm.filesexc.PersonDataProcessorTest.testGetNameOfActualMethod()");
+				Date date = new Date();
+				SimpleDateFormat dayFormat = new SimpleDateFormat("dd.MM.yyyy");
+				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+				logFileWriter.println("Date: " + dayFormat.format(date)
+						+ " Time: " + timeFormat.format(date));
+				logFileWriter
+						.println("Input file name: " + inputFile.getName());
+				logFileWriter.println("Output file name: "
+						+ outputFile.getName());
+				logFileWriter.println("Output error file name: "
+						+ outputErrorFile.getName());
+				logFileWriter.println("Logfile name: " + logFile.getName());
+				logFileWriter.println("Proccessed lines: " + processedLines);
+				logFileWriter.println("Wrong lines: " + wrongLines);
+				logFileWriter.println("Correct lines: " + correctLines);
+			}
 
 		} catch (FileNotFoundException e) {
 			logger.error(e.getMessage());
@@ -144,7 +188,7 @@ public class PersonDataProcessor {
 			return false;
 		}
 
-		//check if one ore more entry is empty
+		// check if one ore more entry is empty
 		for (String string : splittedLine) {
 			if (string.matches("")) {
 				errorMessage = "One ore more entries are empty.";

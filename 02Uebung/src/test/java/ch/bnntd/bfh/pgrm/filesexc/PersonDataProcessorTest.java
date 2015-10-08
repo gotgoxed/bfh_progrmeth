@@ -96,4 +96,18 @@ public class PersonDataProcessorTest {
 
 		assertFalse("alsc=32".matches("\\d+"));
 	}
+	
+	@Test
+	public void testGetNameOfActualMethod() {
+		System.out.println(new Object(){}.getClass().getEnclosingMethod());
+	}
+	
+	@Test(expected=IllegalArgumentException.class) 
+	public void testIfDataAnalyzerReturnsRightExceptions() {
+		try {
+			PersonDataProcessor.dataAnalyzer(null, null, null, null);
+		} catch (EmptyFileException e) {
+			e.printStackTrace();
+		}
+	}
 }
