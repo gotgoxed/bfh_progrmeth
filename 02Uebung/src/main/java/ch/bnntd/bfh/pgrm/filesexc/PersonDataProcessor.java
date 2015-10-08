@@ -10,8 +10,10 @@ package ch.bnntd.bfh.pgrm.filesexc;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
@@ -45,8 +47,8 @@ public class PersonDataProcessor {
 	 * 
 	 *            Die Methode gibt true zurück, wenn alle Zeilen der
 	 *            Input-Daten das geforderte Format erfüllen.
-	 * 
-	 * @throws EmptyFileException
+	 * @throws EmptyFileException 
+	 * @throws IOException 
 	 * 
 	 */
 	public static boolean dataAnalyzer(File inputFile, File outputFile,
@@ -61,28 +63,33 @@ public class PersonDataProcessor {
 
 			inputFileScanner = new Scanner(inputFile, "UTF-8");
 
-			//Three of the params can be defined as null,
-			//then no files will be created.
+			// Three of the params can be defined as null,
+			// then no files will be created.
 			if (outputFile != null) {
 				outputFileWriter = new PrintWriter(outputFile);
 			}
-			if(outputErrorFile != null) {
+			if (outputErrorFile != null) {
 				outputErrorFileWriter = new PrintWriter(outputErrorFile);
 			}
-			if(logFile != null) {
+			if (logFile != null) {
 				logFileWriter = new PrintWriter(logFile);
 			}
 
 			if (inputFileScanner.hasNextLine()) {
 				while (inputFileScanner.hasNextLine()) {
 					String line = inputFileScanner.nextLine();
-					if (checkLine(line)) {
-						outputFileWriter.append(line);
-					} else {
-						outputErrorFileWriter.append(line);
+					try {
+						if (checkLine(line, logFileWriter)) {
+							logger.debug("Line is valid.");
+							outputFileWriter.append(line + "\n");
+						} else {
+							logger.debug("Line is invalid.");
+							outputErrorFileWriter.append(line + "\n");
+						}
+					} catch (IOException e) {
+						logger.debug("Error with logfileWriter.");
 					}
 				}
-
 			} else
 				throw new EmptyFileException("Input file is empty.");
 
@@ -92,9 +99,9 @@ public class PersonDataProcessor {
 		} finally {
 			if (inputFileScanner != null)
 				inputFileScanner.close();
-			if (outputFileWriter!= null)
+			if (outputFileWriter != null)
 				outputFileWriter.close();
-			if (outputErrorFileWriter!= null)
+			if (outputErrorFileWriter != null)
 				outputErrorFileWriter.close();
 			if (logFileWriter != null)
 				logFileWriter.close();
@@ -103,12 +110,77 @@ public class PersonDataProcessor {
 		return false;
 	}
 
-	private static boolean checkLine(String line) {
-		logger.debug("Checking line: \n" + line);
-		
+	// valid line:
+	// 21196;Helfenstein;Ruth;1931;W
+	/**
+	 *
+	 * @param line
+	 * @return true if line is ok, throws {@link WrongLineFormatException} if
+	 *         not.
+	 * @throws IOException
+	 */
+	private static boolean checkLine(String line, PrintWriter logfileWriter)
+			throws IOException {
+
+		boolean logToFile = false;
+		if (logfileWriter != null)
+			logToFile = true;
+
+		logger.debug("Checking line: [" + line + "]");
+		if(logToFile) logfileWriter.println("Checking line: [" + line + "]");
+
 		String[] splittedLine = line.split(";");
+		boolean returnValue = true;
+		String errorMessage = null;
 
+		if (splittedLine.length != 5) {
+			errorMessage = "Wrong line format: Line contains more or less than 5 entries.";
+			logger.debug(errorMessage);
+			if (logToFile)
+				logfileWriter.append(errorMessage);
+			return false;
+		}
 
-		return false;
+		if (!splittedLine[0].matches("\\d\\d\\d\\d\\d?")) {
+			errorMessage = "Wrong line format: ID contains not between 4 and 5 digits.";
+			logger.debug(errorMessage);
+			if (logToFile)
+				logfileWriter.append(errorMessage);
+			returnValue = false;
+		}
+
+		if (!splittedLine[1].matches("\\D+")) {
+			errorMessage = "Wrong line format: Name contains numbers.";
+			logger.debug(errorMessage);
+			if (logToFile)
+				logfileWriter.append(errorMessage);
+			returnValue = false;
+		}
+
+		if (!splittedLine[2].matches("\\D+")) {
+			errorMessage = "Wrong line format: Name contains numbers.";
+			logger.debug(errorMessage);
+			if (logToFile)
+				logfileWriter.append(errorMessage);
+			returnValue = false;
+		}
+
+		if (!splittedLine[3].matches("\\d\\d\\d\\d")) {
+			errorMessage = "Wrong line format: Volume has other format than 4 digits.";
+			logger.debug(errorMessage);
+			if (logToFile)
+				logfileWriter.append(errorMessage);
+			returnValue = false;
+		}
+
+		if (!splittedLine[4].matches("W|M|w|m")) {
+			errorMessage = "Wrong line format: Gender format contains other char than W/M/m/w.";
+			logger.debug(errorMessage);
+			if (logToFile)
+				logfileWriter.append(errorMessage);
+			returnValue = false;
+		}
+
+		return returnValue;
 	}
 }

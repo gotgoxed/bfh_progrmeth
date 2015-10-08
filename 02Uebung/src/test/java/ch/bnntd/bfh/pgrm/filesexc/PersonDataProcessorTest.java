@@ -2,11 +2,8 @@ package ch.bnntd.bfh.pgrm.filesexc;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
@@ -24,15 +21,13 @@ public class PersonDataProcessorTest {
 		try {
 			inputFile = new File(PersonDataProcessorTest.class.getResource(
 					"DataCSVerrors.txt").toURI());
-			File outputFile = new File("FileWithRightLines.txt");
-			File outputErrorFile = new File("FileWithErrorLines.txt");
-			File logFile = new File("logFile.txt");
-			
-			System.out.println(inputFile.toString());
+			File outputFile = new File("test/FileWithRightLines.txt");
+			File outputErrorFile = new File("test/FileWithErrorLines.txt");
+			File logFile = new File("test/logFile.txt");
 
-			boolean validFile = PersonDataProcessor.dataAnalyzer(inputFile, outputFile,
-					outputErrorFile, logFile);
-			
+			boolean validFile = PersonDataProcessor.dataAnalyzer(inputFile,
+					outputFile, outputErrorFile, logFile);
+
 			assertFalse(validFile);
 
 		} catch (URISyntaxException e) {
@@ -80,11 +75,25 @@ public class PersonDataProcessorTest {
 
 			scanner.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.getMessage();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void testMatchStrings() {
+		assertFalse("öäüAbuelasn".matches("[a-zA-Z]"));
+
+		assertFalse("askld8372äü=".matches("[a-zA-Z]"));
+
+		// kind a joke
+		assertFalse("asdlklsköüé".matches("\\w"));
+
+		assertTrue("8956781".matches("\\d+"));
+
+		assertTrue("qweröo;".matches("\\D+"));
+
+		assertFalse("alsc=32".matches("\\d+"));
 	}
 }
