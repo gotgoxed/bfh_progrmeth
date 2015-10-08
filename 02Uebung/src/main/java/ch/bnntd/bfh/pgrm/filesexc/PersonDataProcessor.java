@@ -10,18 +10,13 @@ package ch.bnntd.bfh.pgrm.filesexc;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 
 /**
  * @author jnt
@@ -67,6 +62,8 @@ public class PersonDataProcessor {
 		int correctLines = 0;
 		int wrongLines = 0;
 
+		boolean returnValue = true;
+
 		try {
 			if (inputFile != null)
 				inputFileScanner = new Scanner(inputFile, "UTF-8");
@@ -102,6 +99,7 @@ public class PersonDataProcessor {
 							logger.debug("Line is invalid.");
 							wrongLines++;
 							outputErrorFileWriter.println(line);
+							returnValue = false;
 						}
 						processedLines++;
 					} catch (IOException e) {
@@ -151,7 +149,7 @@ public class PersonDataProcessor {
 				logFileWriter.close();
 		}
 
-		return false;
+		return returnValue;
 	}
 
 	// valid line:

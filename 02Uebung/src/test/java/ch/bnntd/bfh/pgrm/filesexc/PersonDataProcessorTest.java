@@ -13,10 +13,9 @@ public class PersonDataProcessorTest {
 
 	/**
 	 * Tests the dataAnalyzer function.
-	 * 
 	 */
 	@Test
-	public void testDataAnalyzer() {
+	public void testDataAnalyzerWithWrongInputFile() {
 		File inputFile;
 		try {
 			inputFile = new File(PersonDataProcessorTest.class.getResource(
@@ -29,6 +28,30 @@ public class PersonDataProcessorTest {
 					outputFile, outputErrorFile, logFile);
 
 			assertFalse(validFile);
+
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+			fail();
+		} catch (EmptyFileException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	@Test
+	public void testDataAnalyzerWithCorrectInputFile() {
+		File inputFile;
+		try {
+			inputFile = new File(PersonDataProcessorTest.class.getResource(
+					"DataCSVmn_correct.txt").toURI());
+			File outputFile = new File("test/FileWithRightLines.txt");
+			File outputErrorFile = new File("test/FileWithErrorLines.txt");
+			File logFile = new File("test/logFile.txt");
+
+			boolean validFile = PersonDataProcessor.dataAnalyzer(inputFile,
+					outputFile, outputErrorFile, logFile);
+
+			assertTrue(validFile);
 
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
@@ -96,13 +119,14 @@ public class PersonDataProcessorTest {
 
 		assertFalse("alsc=32".matches("\\d+"));
 	}
-	
+
 	@Test
 	public void testGetNameOfActualMethod() {
-		System.out.println(new Object(){}.getClass().getEnclosingMethod());
+		System.out.println(new Object() {
+		}.getClass().getEnclosingMethod());
 	}
-	
-	@Test(expected=IllegalArgumentException.class) 
+
+	@Test(expected = IllegalArgumentException.class)
 	public void testIfDataAnalyzerReturnsRightExceptions() {
 		try {
 			PersonDataProcessor.dataAnalyzer(null, null, null, null);
