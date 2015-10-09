@@ -13,6 +13,7 @@ public class CollectionsTester {
 		Collection<String> names = null;
 		Scanner scanner = new Scanner(System.in);
 
+		System.out.println("Enter a list. (AL=ArrayList, LL=LinkedList, HS=HashSet, TS=TreeSet)");
 		String param = scanner.next();
 		System.out.println("Parameter: " + param);
 
@@ -24,6 +25,11 @@ public class CollectionsTester {
 			names = new HashSet<>();
 		else if (param.equals("TS"))
 			names = new TreeSet<>();
+		else {
+			System.out.println("No valid entry. Terminate program.");
+			System.exit(0);
+		}
+
 		fill(names);
 		System.out.println("Anzahl Elemente: " + names.size());
 		names.remove("Emily");
@@ -47,6 +53,7 @@ public class CollectionsTester {
 		while (i.hasNext()) {
 			String e = i.next();
 			if (e.equals("Peter"))
+				//Advantage over for-loop; remove is possible
 				i.remove();
 			else
 				System.out.println("Element " + element + ": " + e);

@@ -46,6 +46,7 @@ public class PersonDataProcessor {
 	 * 
 	 *            Die Methode gibt true zurück, wenn alle Zeilen der
 	 *            Input-Daten das geforderte Format erfüllen.
+	 * 
 	 * @throws EmptyFileException
 	 * @throws IOException
 	 * 
@@ -157,8 +158,7 @@ public class PersonDataProcessor {
 	/**
 	 *
 	 * @param line
-	 * @return true if line is ok, throws {@link WrongLineFormatException} if
-	 *         not.
+	 * @return true if line is ok, false if not
 	 * @throws IOException
 	 */
 	private static boolean checkLine(String line, PrintWriter logfileWriter)
