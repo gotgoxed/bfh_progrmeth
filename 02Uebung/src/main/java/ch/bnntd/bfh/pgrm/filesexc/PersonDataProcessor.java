@@ -199,7 +199,7 @@ public class PersonDataProcessor {
 			}
 		}
 
-		if (!splittedLine[0].matches("\\d\\d\\d\\d\\d?")) {
+		if (!splittedLine[0].matches("\\d+")) {
 			errorMessage = "Wrong line format: ID contains not between 4 and 5 digits.";
 			logger.debug(errorMessage);
 			if (logToFile)

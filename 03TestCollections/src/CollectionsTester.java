@@ -30,6 +30,8 @@ public class CollectionsTester {
 		System.out.println("Cindy vorhanden? " + names.contains("Cindy"));
 		manipulateData(names);
 		manipulateData(names);
+		
+		scanner.close();
 	}
 
 	private static void fill(Collection<String> c) {

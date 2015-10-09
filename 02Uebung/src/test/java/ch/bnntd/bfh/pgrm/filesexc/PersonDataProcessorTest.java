@@ -1,6 +1,8 @@
 package ch.bnntd.bfh.pgrm.filesexc;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -43,7 +45,7 @@ public class PersonDataProcessorTest {
 		File inputFile;
 		try {
 			inputFile = new File(PersonDataProcessorTest.class.getResource(
-					"DataCSVmn_correct.txt").toURI());
+					"DataCSVmn.txt").toURI());
 			File outputFile = new File("test/FileWithRightLines.txt");
 			File outputErrorFile = new File("test/FileWithErrorLines.txt");
 			File logFile = new File("test/logFile.txt");
