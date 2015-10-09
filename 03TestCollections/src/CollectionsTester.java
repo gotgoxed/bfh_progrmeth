@@ -9,17 +9,20 @@ import java.util.TreeSet;
 
 public class CollectionsTester {
 	public static void main(String[] args) {
+
 		Collection<String> names = null;
 		Scanner scanner = new Scanner(System.in);
+
 		String param = scanner.next();
 		System.out.println("Parameter: " + param);
+
 		if (param.equals("AL"))
 			names = new ArrayList<>();
 		else if (param.equals("LL"))
 			names = new LinkedList<>();
 		else if (param.equals("HS"))
 			names = new HashSet<>();
-		else if (args[0].equals("TS"))
+		else if (param.equals("TS"))
 			names = new TreeSet<>();
 		fill(names);
 		System.out.println("Anzahl Elemente: " + names.size());
