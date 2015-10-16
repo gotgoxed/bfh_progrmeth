@@ -14,7 +14,7 @@ public class Main {
 	 * Prints "Hello" + the name. e.g. "Hello Johnny!"
 	 * 
 	 * @param name
-	 * @author chris
+	 * @author gotgoxed 
 	 */
 	public static void printHello(String name) {
 
@@ -29,7 +29,7 @@ public class Main {
 	 * @param b
 	 */
 	public static int addTwoNumbers(int i, int b) {
-		//TODO Chris
+
 		int result = i + b;
 		return result;
 	}
