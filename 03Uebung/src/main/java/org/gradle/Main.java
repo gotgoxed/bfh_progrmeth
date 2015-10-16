@@ -6,6 +6,8 @@ public class Main {
 
 		printHello("Johnny");
 		printHello("Chris");
+		
+		System.out.println(addTwoNumbers(5, 7));
 	}
 
 	/**
@@ -15,6 +17,7 @@ public class Main {
 	 * @author gotgoxed 
 	 */
 	public static void printHello(String name) {
+
 		System.out.println("Hello " + name);
 	}
 
@@ -26,8 +29,8 @@ public class Main {
 	 * @param b
 	 */
 	public static int addTwoNumbers(int i, int b) {
-		//TODO gotgoxed 
 
-		return 0;
+		int result = i + b;
+		return result;
 	}
 }
