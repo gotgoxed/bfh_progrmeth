@@ -18,7 +18,6 @@ public class Main {
 	public static void printHello(String name) {
 		// TODO Chris
 		System.out.println("Hello " +name);
-		
 	}
 	
 
