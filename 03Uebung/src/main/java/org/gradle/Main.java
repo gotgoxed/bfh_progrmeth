@@ -12,7 +12,7 @@ public class Main {
 	 * Prints "Hello" + the name. e.g. "Hello Johnny!"
 	 * 
 	 * @param name
-	 * @author chris
+	 * @author gotgoxed 
 	 */
 	public static void printHello(String name) {
 		System.out.println("Hello " + name);
@@ -26,7 +26,7 @@ public class Main {
 	 * @param b
 	 */
 	public static int addTwoNumbers(int i, int b) {
-		//TODO Chris
+		//TODO gotgoxed 
 
 		return 0;
 	}
