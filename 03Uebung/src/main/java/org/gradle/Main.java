@@ -6,18 +6,15 @@ public class Main {
 
 		printHello("Johnny");
 		printHello("Chris");
-
 	}
-	
+
 	/**
-	 * Prints "Hello" + the name.
-	 * e.g. "Hello Johnny!"
+	 * Prints "Hello" + the name. e.g. "Hello Johnny!"
 	 * 
 	 * @param name
+	 * @author chris
 	 */
 	public static void printHello(String name) {
-		// TODO Chris
+		System.out.println("Hello " + name);
 	}
-	
-
 }
