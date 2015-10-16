@@ -6,6 +6,8 @@ public class Main {
 
 		printHello("Johnny");
 		printHello("Chris");
+		
+		System.out.println(addTwoNumbers(5, 7));
 	}
 
 	/**
@@ -28,7 +30,7 @@ public class Main {
 	 */
 	public static int addTwoNumbers(int i, int b) {
 		//TODO Chris
-
-		return 0;
+		int result = i + b;
+		return result;
 	}
 }
