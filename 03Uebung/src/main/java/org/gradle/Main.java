@@ -6,19 +6,29 @@ public class Main {
 
 		printHello("Johnny");
 		printHello("Chris");
-
 	}
-	
+
 	/**
-	 * Prints "Hello" + the name.
-	 * e.g. "Hello Johnny!"
+	 * Prints "Hello" + the name. e.g. "Hello Johnny!"
 	 * 
 	 * @param name
+	 * @author chris
 	 */
 	public static void printHello(String name) {
-		// TODO Chris
-		System.out.println("Hello " +name);
-	}
-	
 
+		System.out.println("Hello " + name);
+	}
+
+	/**
+	 * Adds the two numbers
+	 * 
+	 * @return addition of i & b
+	 * @param i
+	 * @param b
+	 */
+	public static int addTwoNumbers(int i, int b) {
+		//TODO Chris
+
+		return 0;
+	}
 }
