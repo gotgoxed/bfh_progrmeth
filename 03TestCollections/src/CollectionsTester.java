@@ -7,6 +7,11 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.TreeSet;
 
+/**
+ * 
+ * @author bfh
+ *
+ */
 public class CollectionsTester {
 	public static void main(String[] args) {
 
@@ -36,7 +41,7 @@ public class CollectionsTester {
 		System.out.println("Cindy vorhanden? " + names.contains("Cindy"));
 		manipulateData(names);
 		manipulateData(names);
-		
+
 		scanner.close();
 	}
 
@@ -53,7 +58,7 @@ public class CollectionsTester {
 		while (i.hasNext()) {
 			String e = i.next();
 			if (e.equals("Peter"))
-				//Advantage over for-loop; remove is possible
+				// Advantage over for-loop; remove is possible
 				i.remove();
 			else
 				System.out.println("Element " + element + ": " + e);
